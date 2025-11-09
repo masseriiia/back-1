@@ -12,14 +12,15 @@ COPY prisma ./prisma/
 # Установить зависимости
 RUN npm ci
 
+# Сгенерировать Prisma Client (до копирования кода)
+# Используем фиктивную DATABASE_URL для генерации клиента
+RUN DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder" npx prisma generate
+
 # Копировать исходный код
 COPY . .
 
 # Собрать приложение
 RUN npm run build
-
-# Сгенерировать Prisma Client
-RUN npx prisma generate
 
 # Stage 2: Production
 FROM node:20-alpine
