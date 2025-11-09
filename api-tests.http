@@ -1,0 +1,127 @@
+### Переменные
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+### Переменная для токена (обновите после логина)
+@accessToken = your_token_here
+
+###
+### 1. Регистрация нового пользователя
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "ivan@example.com",
+  "password": "password123",
+  "firstName": "Иван",
+  "lastName": "Иванов",
+  "birthDate": "1990-05-15"
+}
+
+###
+### 2. Регистрация второго пользователя
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "maria@example.com",
+  "password": "password456",
+  "firstName": "Мария",
+  "lastName": "Петрова",
+  "birthDate": "1995-08-20"
+}
+
+###
+### 3. Вход (Login)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "ivan@example.com",
+  "password": "password123"
+}
+
+###
+### 4. Получение профиля (требуется токен)
+GET {{baseUrl}}/auth/profile
+Authorization: Bearer {{accessToken}}
+
+###
+### Тесты на валидацию
+
+### 5. Регистрация с невалидным email
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "invalid-email",
+  "password": "password123",
+  "firstName": "Иван",
+  "lastName": "Иванов",
+  "birthDate": "1990-05-15"
+}
+
+###
+### 6. Регистрация с коротким паролем
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "test@example.com",
+  "password": "123",
+  "firstName": "Иван",
+  "lastName": "Иванов",
+  "birthDate": "1990-05-15"
+}
+
+###
+### 7. Регистрация без обязательных полей
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+###
+### 8. Регистрация с уже существующим email
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "ivan@example.com",
+  "password": "password123",
+  "firstName": "Другой",
+  "lastName": "Иванов",
+  "birthDate": "1990-05-15"
+}
+
+###
+### 9. Вход с неправильным паролем
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "ivan@example.com",
+  "password": "wrongpassword"
+}
+
+###
+### 10. Вход с несуществующим email
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "notexist@example.com",
+  "password": "password123"
+}
+
+###
+### 11. Доступ к защищенному роуту без токена
+GET {{baseUrl}}/auth/profile
+
+###
+### 12. Доступ к защищенному роуту с невалидным токеном
+GET {{baseUrl}}/auth/profile
+Authorization: Bearer invalid_token_here
