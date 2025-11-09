@@ -15,7 +15,15 @@ async function bootstrap() {
   );
 
   // Enable CORS
-  app.enableCors();
+  app.enableCors({
+    origin: [
+      'http://localhost:5173', // Vue dev server
+      'http://localhost:3000', // Альтернативный порт
+      'http://localhost:5174',
+      'https://vue-system-crm.app', // Ваш продакшн домен
+    ],
+    credentials: true,
+  });
 
   await app.listen(process.env.PORT ?? 3000);
 }

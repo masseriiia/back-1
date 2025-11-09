@@ -16,15 +16,10 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('catalogs')
-@UseGuards(JwtAuthGuard)
 export class CatalogsController {
   constructor(private readonly catalogsService: CatalogsService) {}
 
-  @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.catalogsService.create(createCategoryDto);
-  }
-
+  // Публичные endpoints (без авторизации)
   @Get()
   findAll() {
     return this.catalogsService.findAll();
@@ -40,12 +35,21 @@ export class CatalogsController {
     return this.catalogsService.findOne(id);
   }
 
+  // Защищенные endpoints (требуют авторизацию)
+  @Post()
+  @UseGuards(JwtAuthGuard)
+  create(@Body() createCategoryDto: CreateCategoryDto) {
+    return this.catalogsService.create(createCategoryDto);
+  }
+
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     return this.catalogsService.update(id, updateCategoryDto);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
     return this.catalogsService.remove(id);

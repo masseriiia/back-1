@@ -4,7 +4,15 @@
 
 Модуль `/catalogs` предоставляет CRUD операции для управления категориями.
 
-**Все endpoints требуют авторизации** (JWT токен в заголовке `Authorization: Bearer <token>`)
+**Публичные endpoints (без авторизации):**
+- `GET /catalogs` - получить все категории
+- `GET /catalogs/active` - получить активные категории
+- `GET /catalogs/:id` - получить одну категорию
+
+**Защищенные endpoints (требуют JWT токен):**
+- `POST /catalogs` - создать категорию
+- `PATCH /catalogs/:id` - обновить категорию
+- `DELETE /catalogs/:id` - удалить категорию
 
 ## Endpoints
 
@@ -47,12 +55,13 @@ Content-Type: application/json
 
 ---
 
-### 2. Получить все категории
+### 2. Получить все категории (Публичный endpoint)
 
 ```http
 GET /catalogs
-Authorization: Bearer <your_token>
 ```
+
+**Авторизация НЕ требуется**
 
 **Ответ:**
 ```json
