@@ -47,4 +47,4 @@ EXPOSE 3000
 ENTRYPOINT ["dumb-init", "--"]
 
 # Запустить приложение
-CMD ["node", "dist/main"]
+CMD ["node", "dist/main.js"]
