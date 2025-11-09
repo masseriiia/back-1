@@ -21,6 +21,8 @@ async function bootstrap() {
       'http://localhost:3000', // Альтернативный порт
       'http://localhost:5174',
       'https://vue-system-crm.app', // Ваш продакшн домен
+      'https://back-1-production.up.railway.app', // Railway backend
+      'https://vue-system-crm-production.up.railway.app', // Railway frontend (если будет)
     ],
     credentials: true,
   });
